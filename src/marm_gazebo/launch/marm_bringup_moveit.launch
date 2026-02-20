@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<launch>
+  <!-- 启动Gazebo仿真环境 -->
+  <include file="$(find marm_gazebo)/launch/world.launch" />
+  
+  <include file="$(find marm_gazebo)/launch/marm_trajectory_controller.launch" />
+
+
+  <!-- 启动MoveIt规划执行 -->
+  <include file="$(find marm_moveit_config)/launch/move_group.launch">
+    <arg name="publish_monitored_planning_scene" value="true" />
+  </include>
+  
+  
+  
+  
+  <!-- 直接启动RViz -->
+  <include file="$(find marm_moveit_config)/launch/moveit_rviz.launch" />
+</launch>

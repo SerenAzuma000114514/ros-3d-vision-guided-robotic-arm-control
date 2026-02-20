@@ -1,0 +1,17 @@
+<launch>
+  <!-- 加载关节控制器配置 -->
+  <!--arg name="ROBOT_TYPE" default="marm" /-->
+  <rosparam file="$(find marm_gazebo)/config/trajectory_controllers.yaml" command="load"/>
+
+  <!-- 启动控制器 -->
+  <node name="controller_spawner" pkg="controller_manager" type="spawner" respawn="false"
+        output="screen" ns="/marm_robot" 
+        args="joint_controller joint_state_controller"/>
+        
+        
+  <node name="robot_state_publisher" pkg="robot_state_publisher" 
+        type="robot_state_publisher" respawn="false" output="screen">
+    <remap from="/joint_states" to="/marm_robot/joint_states" />
+  </node>
+
+</launch>

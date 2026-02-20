@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<launch>
+  <!-- 设置控制器管理器类型 -->
+  <param name="moveit_controller_manager" value="moveit_ros_control_interface::MoveItControllerManager" />
+  <param name="moveit_controller_manager" value="$(arg moveit_controller_manager)"/>
+  
+  <!-- 指定控制器管理器命名空间 -->
+  <param name="controller_manager_name" value="/marm_robot/controller_manager" />
+  <param name="use_controller_manager" value="true" />
+  
+  <!-- 加载控制器配置 -->
+  <rosparam file="$(find marm_moveit_config)/config/controllers.yaml"/>
+</launch>

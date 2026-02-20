@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<launch>
+  <!-- 这里使用真实的插件类名 -->
+  <arg name="moveit_controller_manager" default="moveit_fake_controller_manager/MoveItFakeControllerManager"/>
+  <param name="moveit_controller_manager" value="$(arg moveit_controller_manager)"/>
+  
+  <!-- 关键：指定连接到真实的Gazebo控制器管理器 -->
+  <param name="controller_manager_name" value="/marm_robot/controller_manager"/>
+  <param name="use_controller_manager" value="true"/>
+  
+  <!-- 加载控制器配置 -->
+  <rosparam file="$(find marm_moveit_config)/config/controllers.yaml"/>
+</launch>
+
+
+<!--
+<launch>
+
+  <!== execute the trajectory in 'interpolate' mode or jump to goal position in 'last point' mode ==>
+  <arg name="fake_execution_type" default="interpolate" />
+
+  <!== Set the param that trajectory_execution_manager needs to find the controller plugin ==>
+  <param name="moveit_controller_manager" value="moveit_fake_controller_manager/MoveItFakeControllerManager"/>
+
+  <!== The rest of the params are specific to this plugin ==>
+  <rosparam subst_value="true" file="$(find marm_moveit_config)/config/fake_controllers.yaml"/>
+
+</launch>
+-->
+

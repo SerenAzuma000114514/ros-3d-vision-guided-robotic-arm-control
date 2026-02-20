@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<launch>
+
+
+  <include file="$(find marm_gazebo)/launch/world.launch"/>
+  <include file="$(find marm_gazebo)/launch/marm_gazebo_controller.launch"/>
+
+</launch>
+
+<!--pointcontroller的测试文件,与轨迹控制器无关.-->
