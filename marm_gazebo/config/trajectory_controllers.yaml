@@ -1,0 +1,25 @@
+marm_robot:
+  joint_controller:
+    type: position_controllers/JointTrajectoryController
+    joints:
+      - joint1
+      - joint2
+      - joint3
+      - joint4
+      - joint5
+      - joint6
+
+    gains:
+      joint1: {p: 3024.0, i: 30240.0, d: 100.3,i_clamp: 0.0}
+      joint2: {p: 3645.0, i: 364500.0, d: 121.0,i_clamp: 0.0}
+      joint3: {p: 2214.0, i: 22140.0, d: 73.3,i_clamp: 0.0}       
+      joint4: {p: 324.0, i: 3240.0, d: 10.3,i_clamp: 0.0}     
+      joint5: {p: 270.0, i: 2700.0, d: 8.5,i_clamp: 0.0}
+      joint6: {p: 216.0, i: 2160.0, d: 6.7,i_clamp: 0.0}
+      
+      
+  gripper_controller:
+    type: effort_controllers/JointGroupEffortController
+    joints:
+      - gripper_left_joint
+      - gripper_right_joint

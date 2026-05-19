@@ -1,0 +1,9 @@
+<launch>
+
+    <rosparam file="$(find marm_gazebo)/config/trajectory_controllers.yaml" command="load"/>
+
+    <node name="controller_spawner" pkg="controller_manager" type="spawner" respawn="false"
+          output="screen" ns="/marm_robot" args="joint_controller gripper_controller"/>
+
+</launch>
+

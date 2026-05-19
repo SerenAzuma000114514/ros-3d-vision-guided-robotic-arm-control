@@ -1,0 +1,72 @@
+<?xml version="1.0"?>
+<robot name="double_cylinder">
+  <!-- 下面小圆柱体（主体） -->
+  <link name="lower_cylinder">
+    <inertial>
+      <mass value="0.01" />
+      <origin xyz="0 0 0" />
+      <!-- 圆柱体惯量近似计算：半径0.035，高0.03，质量0.01 -->
+      <inertia ixx="0.0001" ixy="0" ixz="0" iyy="0.0001" iyz="0" izz="0.0001" />
+    </inertial>
+    <visual>
+      <geometry>
+        <cylinder radius="0.035" length="0.03" />
+      </geometry>
+      <material name="red"><color rgba="0.8 0.2 0.2 1"/></material>
+    </visual>
+    <collision>
+      <geometry>
+        <cylinder radius="0.035" length="0.03" />
+      </geometry>
+    </collision>
+  </link>
+
+  <!-- 上面大圆柱体（凸起） -->
+  <link name="upper_cylinder">
+    <inertial>
+      <mass value="0.005" />   <!-- 质量略小于主体，也可以自行调整 -->
+      <origin xyz="0 0 0" />
+      <inertia ixx="0.00005" ixy="0" ixz="0" iyy="0.00005" iyz="0" izz="0.00005" />
+    </inertial>
+    <visual>
+      <geometry>
+        <cylinder radius="0.06" length="0.02" />
+      </geometry>
+      <material name="red"><color rgba="0.8 0.2 0.2 1"/></material>
+    </visual>
+    <collision>
+      <geometry>
+        <cylinder radius="0.06" length="0.02" />
+      </geometry>
+    </collision>
+  </link>
+
+  <!-- 固定关节：将大圆柱体放在小圆柱体的上表面中心 -->
+  <joint name="upper_joint" type="fixed">
+    <parent link="lower_cylinder"/>
+    <child link="upper_cylinder"/>
+    <!-- 小圆柱体半高 0.015，大圆柱体半高 0.01，所以中心偏移 z = 0.015 + 0.01 = 0.025 -->
+    <origin xyz="0 0 0.025" rpy="0 0 0"/>
+  </joint>
+
+  <!-- Gazebo 物理参数（与原立方体完全一致） -->
+  <gazebo reference="lower_cylinder">
+    <material>Gazebo/Red</material>
+    <kp>10000000.0</kp>
+    <kd>1.0</kd>
+    <mu1>100</mu1>
+    <mu2>100</mu2>
+    <minDepth>0.003</minDepth>
+    <maxVel>0.0</maxVel>       
+  </gazebo>
+
+  <gazebo reference="upper_cylinder">
+    <material>Gazebo/Red</material>
+    <kp>10000000.0</kp>
+    <kd>1.0</kd>
+    <mu1>100</mu1>
+    <mu2>100</mu2>
+    <minDepth>0.003</minDepth>
+    <maxVel>0.0</maxVel>       
+  </gazebo>
+</robot>

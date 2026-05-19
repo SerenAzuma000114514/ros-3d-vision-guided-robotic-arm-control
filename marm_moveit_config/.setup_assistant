@@ -1,0 +1,11 @@
+moveit_setup_assistant_config:
+  URDF:
+    package: marm_gazebo
+    relative_path: urdf/marm_robot.xacro
+    xacro_args: ""
+  SRDF:
+    relative_path: config/marm.srdf
+  CONFIG:
+    author_name: S.A.
+    author_email: 202200800221@mail.sdu.edu
+    generated_timestamp: 1778165281

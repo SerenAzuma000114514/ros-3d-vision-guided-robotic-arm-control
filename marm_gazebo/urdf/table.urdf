@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+<robot name="table">
+  <link name="cube_link">
+    <inertial>
+      <mass value="5.0" />
+      <origin xyz="0 0 0" />
+      <!-- 长方体惯量近似: (1/12)*m*(y^2+z^2) 等 -->
+      <inertia ixx="0.00417" ixy="0" ixz="0"
+               iyy="0.00417" iyz="0"
+               izz="0.0075" />
+    </inertial>
+    <visual>
+      <geometry>
+        <box size="0.3 0.3 0.08" />
+      </geometry>
+      <material name="brown">
+        <color rgba="0.545 0.271 0.075 1.0"/>
+      </material>
+    </visual>
+    <collision>
+      <geometry>
+        <box size="0.3 0.3 0.08" />
+      </geometry>
+    </collision>
+  </link>
+
+  <gazebo reference="cube_link">
+    <material>Gazebo/Brown</material>
+    <kp>1000000.0</kp>
+    <kd>1.0</kd>
+    <mu1>100.0</mu1>
+    <mu2>100.0</mu2>
+  </gazebo>
+</robot>

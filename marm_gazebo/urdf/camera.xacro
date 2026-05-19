@@ -1,0 +1,75 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="camera">
+
+  <!-- 相机安装link -->
+  <link name="camera_link">
+    <visual>
+      <geometry>
+        <box size="0.05 0.05 0.05"/>
+      </geometry>
+      <material name="black">
+        <color rgba="0 0 0 1"/>
+      </material>
+    </visual>
+    <collision>
+      <geometry>
+        <box size="0.05 0.05 0.05"/>
+      </geometry>
+    </collision>
+    <inertial>
+      <mass value="0.1"/>
+      <inertia ixx="0.001" ixy="0" ixz="0"
+               iyy="0.001" iyz="0" izz="0.001"/>
+    </inertial>
+  </link>
+
+  <!-- 相机固定到base_link，xyz/rpy根据你的实际安装位置调整 -->
+  <!-- 改这里：parent改为world，xyz让相机悬在机械臂上方侧面 -->
+ <joint name="camera_joint" type="fixed">
+   <parent link="world"/>        
+   <child link="camera_link"/>
+    <origin xyz="0.5 -0.5 1.2" rpy="0 1.5708 0"/>
+ </joint>
+
+  <!-- 光心坐标系（Gazebo插件需要） -->
+  <link name="camera_link_optical"/>
+  <joint name="camera_optical_joint" type="fixed">
+    <parent link="camera_link"/>
+    <child link="camera_link_optical"/>
+    <origin xyz="0 0 0" rpy="-1.5707 0 -1.5707"/>
+  </joint>
+
+  <!-- Gazebo深度相机插件 -->
+  <gazebo reference="camera_link">
+    <sensor type="depth" name="camera">
+      <always_on>true</always_on>
+      <update_rate>10</update_rate>
+      <camera>
+        <horizontal_fov>1.047</horizontal_fov>
+        <image>
+          <width>640</width>
+          <height>480</height>
+          <format>R8G8B8</format>
+        </image>
+        <clip>
+          <near>0.1</near>
+          <far>5.0</far>
+        </clip>
+      </camera>
+      <plugin name="camera_plugin" filename="libgazebo_ros_openni_kinect.so">
+        <baseline>0.1</baseline>
+        <alwaysOn>true</alwaysOn>
+        <updateRate>10</updateRate>
+        <cameraName>camera</cameraName>
+        <frameName>camera_link_optical</frameName>
+        <imageTopicName>rgb/image_raw</imageTopicName>
+        <depthImageTopicName>depth/image_raw</depthImageTopicName>
+        <pointCloudTopicName>depth/points</pointCloudTopicName>
+        <cameraInfoTopicName>rgb/camera_info</cameraInfoTopicName>
+        <pointCloudCutoff>0.1</pointCloudCutoff>
+        <pointCloudCutoffMax>5.0</pointCloudCutoffMax>
+      </plugin>
+    </sensor>
+  </gazebo>
+
+</robot>

@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<launch>
+  <!-- 启动Gazebo仿真环境 -->
+  <include file="$(find marm_gazebo)/launch/world.launch" />
+  
+ <include file="$(find marm_gazebo)/launch/marm_gazebo_states.launch" />
+
+  
+  <include file="$(find marm_gazebo)/launch/marm_trajectory_controller.launch" />
+  
+  
+
+</launch>

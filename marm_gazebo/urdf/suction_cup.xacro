@@ -1,0 +1,63 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://ros.org/wiki/xacro">
+
+  <xacro:property name="cup_radius" value="0.02" />
+  <xacro:property name="cup_height" value="0.04" />
+  <xacro:property name="cup_mass" value="0.01" />
+
+  <link name="vacuum_gripper">
+    <visual>
+      <origin xyz="0 0 ${cup_height/2}" rpy="0 0 0"/>
+      <geometry>
+        <cylinder radius="${cup_radius}" length="${cup_height}"/>
+      </geometry>
+      <material name="black">
+        <color rgba="0.1 0.1 0.1 1"/>
+      </material>
+    </visual>
+    
+    <collision>
+      <origin xyz="0 0 ${cup_height/2}" rpy="0 0 0"/>
+      <geometry>
+        <cylinder radius="${cup_radius}" length="${cup_height}"/>
+      </geometry>
+    </collision>
+
+    <inertial>
+      <origin xyz="0 0 ${cup_height/2}" rpy="0 0 0"/>
+      <mass value="${cup_mass}"/>
+      <inertia ixx="1e-6" ixy="0" ixz="0" iyy="1e-6" iyz="0" izz="1e-6"/>
+    </inertial>
+  </link>
+
+  <joint name="vacuum_gripper_joint" type="fixed">
+    <parent link="Link6"/>
+    <child link="vacuum_gripper"/>
+    <origin xyz="0 0 0" rpy="0 0 0"/> 
+  </joint>
+
+  <link name="suction_frame"/>
+  <joint name="suction_frame_joint" type="fixed">
+    <parent link="vacuum_gripper"/>
+    <child link="suction_frame"/>
+    <origin xyz="0 0 ${cup_height}" rpy="0 0 0"/>
+  </joint>
+
+  <gazebo reference="vacuum_gripper">
+    <material>Gazebo/Black</material>
+    <mu1>10.0</mu1>
+    <mu2>10.0</mu2>
+  </gazebo>
+
+  <gazebo>
+    <plugin name="gazebo_ros_vacuum_gripper" filename="libgazebo_ros_vacuum_gripper.so">
+      <robotNamespace>/marm_robot</robotNamespace>
+      <bodyName>vacuum_gripper</bodyName>
+      <topicName>grasping</topicName>
+      <maxForce>100</maxForce>
+      <maxDistance>0.1</maxDistance>
+      <minDistance>0.01</minDistance>
+    </plugin>
+  </gazebo>
+
+</robot>
